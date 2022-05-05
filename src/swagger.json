@@ -1,0 +1,161 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Engenharia de Software é legal",
+    "description": "me dá 10",
+    "contact": {
+      "email": "guilherme_gbm@outlook.com"
+    },
+    "termsOfService": "link pra termos de serviço q bagua",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "API de teste"
+    }
+  ],
+  "paths": {
+    "/teachers": {
+      "post": {
+        "summary": "Cadastro de professor",
+        "description": "Rota para post de teachers",
+        "tags": ["Teachers"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#components/schemas/Teacher"
+              },
+              "examples": {
+                "teacher": {
+                  "value": {
+                    "name": "André Volkswagen",
+                    "description": "Professor muito legal"
+                  }
+                },
+                "teacher1": {
+                  "value": {
+                    "name": "André Ford",
+                    "description": "Professor legal"
+                  }
+                },
+                "teacher2": {
+                  "value": {
+                    "name": "André Ferrari",
+                    "description": "Professor muito legal e mais rápido"
+                  }
+                },
+                "teacher3": {
+                  "value": {
+                    "name": "André rottweiler",
+                    "description": "Professor muito legal e mais brabo"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#components/schemas/Teacher"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Rota que retorna todos professores",
+        "summary": "Busca todos professores",
+        "tags": ["Teachers"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Teacher"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teachers/{id}": {
+      "get": {
+        "description": "Rota pra buscar professor por id",
+        "summary": "Busca um professor específico",
+        "tags": ["Teachers"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Nome do professor pelo id",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Teacher"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Não encontrado"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Teacher": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+  
+}
